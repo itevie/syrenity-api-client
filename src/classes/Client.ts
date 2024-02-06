@@ -23,7 +23,7 @@ const is_browser =
 // Check which websocket to use for browser compatibility
 const ws = is_browser
   ? WebSocket
-  : require("ws");
+  : import("ws") as any;
 
 interface ClientConfig {
   baseURL?: string;
