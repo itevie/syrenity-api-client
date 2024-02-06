@@ -1,11 +1,15 @@
 {
-  "name": "syrenity-2.1-client",
-  "version": "1.0.0",
-  "description": "",
-  "main": "src/index.ts",
+  "name": "syrenity-api-client",
+  "version": "1.0.1",
+  "description": "API Client for Syrenity",
+  "main": "build/index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "files": [
+    "build"
+  ],
+  "homepage": "https://github.com/itevie/syrenity-api-client",
   "keywords": [],
   "author": "",
   "license": "ISC",
@@ -16,8 +20,10 @@
     "@types/node": "^20.8.3",
     "@types/ws": "^8.5.6",
     "axios": "^1.5.1",
-    "jest": "^29.7.0",
-    "ts-jest": "^29.1.1",
     "ws": "^8.14.2"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.1"
   }
 }
