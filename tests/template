@@ -1,0 +1,11 @@
+import {afterAll, describe, expect, test} from '@jest/globals';
+import * as Syrenity from "../src/index";
+import options from "./options.json";
+
+const client = new Syrenity.Client();
+
+describe("Testing user functions", () => {
+  beforeAll(async () => {
+    await client.loginWithoutWebsockets(options.token);
+  });
+});

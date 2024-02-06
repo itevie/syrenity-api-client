@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "noImplicitReturns": false,
+    "target": "es2022",
+    "module": "esnext",
+    "composite": true,
+    "allowJs": true,
+    "moduleResolution": "Node",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "resolveJsonModule": true
+  },
+  "ts-node": {
+    "files": true
+  },
+  "include": [
+    "src/**/*.ts",
+    "test/**/*.ts"
+  ],
+}
