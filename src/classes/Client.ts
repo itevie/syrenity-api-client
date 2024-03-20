@@ -126,6 +126,20 @@ export default class Client {
     this.registerWSEvents();
   }
 
+  /**
+   * Checks whether or not the client is logged in
+   * with cookies
+   */
+  public isLoggedIn(): Promise<boolean> {
+    return new Promise<boolean>(resolve => {
+      this.sendHTTP("/users/@me", "GET").then(() => {
+        resolve(true);
+      }).catch(() => {
+        resolve(false);
+      });
+    });
+  }
+
   public async loginWithoutWebsockets(token: string) {
     this.log(`Set token without websockets - no further action needed`);
     this.token = token;
@@ -437,7 +451,7 @@ export default class Client {
    */
   private censorToken(token: string) {
     const parts = token.split('.');
-    if (!parts[2]) return `Unknown Token`;
+    if (!parts[2]) return token;
     parts[2] = parts[2].replace(/[A-Za-z0-9-]/g, '*');
     return parts.join('.');
   }

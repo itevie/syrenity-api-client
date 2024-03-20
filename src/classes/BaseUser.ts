@@ -14,9 +14,9 @@ export default class BaseUser {
     this.client = client;
   }
 
-  public async fetch(): Promise<index.User> {
+  public async fetch(noCache?: boolean | null): Promise<index.User> {
     // Check if the user is in cache
-    if (this.client.cacheManager.users.has(this.id)) {
+    if (!noCache && this.client.cacheManager.users.has(this.id)) {
       const cached = this.client.cacheManager.users.get(this.id);
       return new index.User(cached.id, this.client, cached);
     }
@@ -43,8 +43,10 @@ export default class BaseUser {
   }
 
   public async updateAvatar(newAvatar: string) {
-    const res = (await this.client.sendHTTP(`/users/${this.id}/avatar`, "PATCH", {
+    let data = (await this.client.sendHTTP(`/users/${this.id}/avatar`, "PATCH", {
       avatar: newAvatar
-    }));
+    })).data as UserData;
+
+    return new index.User(data.id, this.client, data);
   }
 }
