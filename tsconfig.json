@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "rootDir": "./src",
+    "outDir": "./build",
+    "esModuleInterop": true,
+    "noImplicitReturns": false,
+    "target": "es2022",
+    "module": "esnext",
+    "declaration": true,
+    "allowJs": true,
+    "incremental": false,
+    "moduleResolution": "Node",
+    "typeRoots": ["./src/types", "./node_modules/@types"],
+    "resolveJsonModule": true
+  },
+  "include": [
+    "src/**/*.ts"
+  ]
+}
