@@ -27,6 +27,8 @@ export default class Message extends Base {
   constructor(client: Client, data: MessageAPIData) {
     super(client);
 
+    this.client.emit("apiMessageClassCreation", data);
+
     this.id = data.id;
     this.content = data.content;
     this.channelID = data.channel_id;

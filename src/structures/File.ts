@@ -9,7 +9,7 @@ export default class File extends Base {
   constructor(client: Client, url: string) {
     super(client);
 
-    if (url.startsWith("syrenity-file://")) {
+    if (url?.startsWith("syrenity-file://")) {
       this.id = url.replace("syrenity-file://", "");
       this.url = `${client.options.baseUrl}/files/${this.id}`;
       this.isSyrenity = true;
@@ -17,4 +17,13 @@ export default class File extends Base {
       this.url = url;
     }
   }
+
+  public static check(url: string | null) {
+    if (url?.startsWith("syrenity-file://")) {
+      const id = url.replace("syrenity-file://", "");
+      return `/files/${id}`;
+    } else { 
+      return url;
+    }
+  } 
 }

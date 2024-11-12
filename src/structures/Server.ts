@@ -4,6 +4,7 @@ import User from "./User";
 import ServerChannelManager from "../managers/ServerChannelManager";
 import Channel, { ChannelAPIData } from "./Channel";
 import File from "./File";
+import ServerInviteManager from "../managers/ServerInviteManager";
 
 export interface ServerAPIData {
   id: number;
@@ -21,11 +22,15 @@ export default class Server extends Base {
   public avatar: File | null;
 
   public channels: ServerChannelManager;
+  public invites: ServerInviteManager;
 
   constructor(client: Client, data: ServerAPIData) {
     super(client);
 
+    this.client.emit("apiServerClassCreation", data);
+
     this.channels = new ServerChannelManager(client, this);
+    this.invites = new ServerInviteManager(client, this);
 
     this.id = data.id;
     this.name = data.name;

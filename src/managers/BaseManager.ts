@@ -8,7 +8,7 @@ export default class BaseManager<K, V> {
     this.client = client;
   }
 
-  protected addCache(id: K, value: V): V {
+  public addCache(id: K, value: V): V {
     this.cache.set(id, value);
     return value;
   }

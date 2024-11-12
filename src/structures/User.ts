@@ -29,6 +29,8 @@ export default class User extends Base {
   constructor(client: Client, options: UserAPIData) {
       super(client);
 
+      client.emit("apiUserClassCreation", options);
+
       this.id = options.id;
       this.username = options.username;
       this.avatar = new File(client, options.avatar);
@@ -42,7 +44,6 @@ export default class User extends Base {
 
   public async fetchServers(): Promise<Server[]> {
     let result = await this.client.rest.get<ServerAPIData[]>(`/api/users/${this.id}/servers`);
-    console.log(result);
-    return result.data.map(x => new Server(this.client, x));
+    return (result.data ?? []).map(x => new Server(this.client, x));
   }
 }
