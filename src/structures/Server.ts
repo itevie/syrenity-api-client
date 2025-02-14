@@ -3,7 +3,7 @@ import Base from "./Base";
 import User from "./User";
 import ServerChannelManager from "../managers/ServerChannelManager";
 import Channel, { ChannelAPIData } from "./Channel";
-import File from "./File";
+import File from "./FileBase";
 import ServerInviteManager from "../managers/ServerInviteManager";
 
 export interface ServerAPIData {
@@ -20,6 +20,7 @@ export default class Server extends Base {
   public ownerID: number;
   public description: string | null;
   public avatar: File | null;
+  public _data: ServerAPIData;
 
   public channels: ServerChannelManager;
   public invites: ServerInviteManager;
@@ -31,6 +32,8 @@ export default class Server extends Base {
 
     this.channels = new ServerChannelManager(client, this);
     this.invites = new ServerInviteManager(client, this);
+
+    this._data = data;
 
     this.id = data.id;
     this.name = data.name;
@@ -49,7 +52,7 @@ export default class Server extends Base {
       name: this.name,
       ownerID: this.ownerID,
       description: this.description,
-      avatar: this.avatar
+      avatar: this.avatar,
     } as const;
   }
 }

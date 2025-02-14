@@ -34,4 +34,8 @@ export default class Invite extends Base {
     this.maxUses = data.max_uses;
     this.uses = data.uses;
   }
+
+  public async use(): Promise<void> {
+    await this.client.rest.post(`/api/invites/${this.id}`);
+  }
 }

@@ -1,29 +1,23 @@
 import Client from "../client/Client";
-import Base from "./Base";
+import FileBase from "./FileBase";
 
-export default class File extends Base {
-  private isSyrenity: boolean = false;
-  public url: string;
-  public id: string;
-  
-  constructor(client: Client, url: string) {
-    super(client);
+export interface FileAPIData {
+  id: string;
+  created_at: string;
+  file_name: string;
+  original_url: string | null;
+}
 
-    if (url?.startsWith("syrenity-file://")) {
-      this.id = url.replace("syrenity-file://", "");
-      this.url = `${client.options.baseUrl}/files/${this.id}`;
-      this.isSyrenity = true;
-    } else {
-      this.url = url;
-    }
+export default class File extends FileBase {
+  public createdAt: Date;
+  public fileName: string;
+  public originalUrl: string | null;
+
+  constructor(client: Client, data: FileAPIData) {
+    super(client, data.id);
+
+    this.createdAt = new Date(data.created_at);
+    this.fileName = data.file_name;
+    this.originalUrl = data.original_url;
   }
-
-  public static check(url: string | null) {
-    if (url?.startsWith("syrenity-file://")) {
-      const id = url.replace("syrenity-file://", "");
-      return `/files/${id}`;
-    } else { 
-      return url;
-    }
-  } 
 }

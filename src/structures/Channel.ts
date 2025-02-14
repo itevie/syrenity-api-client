@@ -1,6 +1,7 @@
 import Client from "../client/Client";
 import Base from "./Base";
 import ChannelMessageManager from "../managers/ChannelMessageManager";
+import ChannelBase from "./ChannelBase";
 
 export interface ChannelAPIData {
   id: number;
@@ -9,22 +10,26 @@ export interface ChannelAPIData {
   name: string;
   topic: string | null;
   is_nsfw: boolean;
+  position: number;
 }
 
-export default class Channel extends Base {
-  public id: number;
+export default class Channel extends ChannelBase {
   public type: "channel" | "dm";
   public guildId: number | null;
   public name: string;
   public topic: string | null;
   public nsfw: boolean;
+  public position: number;
+  public _data: ChannelAPIData;
 
   public messages: ChannelMessageManager;
 
   constructor(client: Client, data: ChannelAPIData) {
-    super(client);
+    super(client, data.id);
 
     this.messages = new ChannelMessageManager(client, this);
+
+    this._data = data;
 
     this.id = data.id;
     this.type = data.type;
@@ -32,6 +37,7 @@ export default class Channel extends Base {
     this.guildId = data.guild_id;
     this.name = data.name;
     this.nsfw = data.is_nsfw;
+    this.position = data.position;
   }
 
   public strip() {
@@ -41,7 +47,7 @@ export default class Channel extends Base {
       topic: this.topic,
       guildId: this.guildId,
       name: this.name,
-      nsfw: this.name
+      nsfw: this.name,
     } as const;
   }
 }
