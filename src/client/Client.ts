@@ -4,6 +4,7 @@ import ChannelManager from "../managers/ChannelManager";
 import ServerManager from "../managers/ServerManager";
 import EventEmitter from "events";
 import {
+  ClientEvents,
   PayloadDispatch,
   PayloadHello,
   WebsocketDispatchTypes,
@@ -17,30 +18,7 @@ import FileManager from "../managers/FileManager";
 import InviteManager from "../managers/InviteManager";
 import Member from "../structures/Member";
 import { UserReactionApiData } from "../structures/Reaction";
-
-interface ClientEvents {
-  debug: [message: string];
-  ready: [user: User, isReconnect: boolean];
-  disconnect: [];
-  reconnect: [];
-  error: [error: any];
-
-  messageCreate: [message: Message];
-  messageDelete: [messageId: number, channelId: number];
-  messageUpdate: [message: Message];
-
-  messageReactionAdd: [reaction: UserReactionApiData, message: Message];
-  messageReactionRemove: [reaction: UserReactionApiData, message: Message];
-
-  serverMemberAdd: [member: Member];
-  serverMemberRemove: [member: Member];
-
-  userUpdate: [user: User];
-
-  apiUserClassCreation: [user: UserAPIData];
-  apiMessageClassCreation: [message: MessageAPIData];
-  apiServerClassCreation: [server: ServerAPIData];
-}
+import Channel from "../structures/Channel";
 
 interface ClientOptions {
   baseUrl?: string;
@@ -151,7 +129,7 @@ export default class Client extends EventEmitter {
     );
   }
 
-  private handleWebsocketMessage(message: WebsocketMessage) {
+  private async handleWebsocketMessage(message: WebsocketMessage) {
     this.debug("WS", "RECIEVE MESSAGE", JSON.stringify(message));
 
     switch (message.type) {
@@ -232,6 +210,28 @@ export default class Client extends EventEmitter {
               "messageReactionRemove",
               data.reaction,
               new Message(this, data.new_message)
+            );
+            break;
+          }
+          case "ChannelCreate":
+            this.emit(
+              "channelCreate",
+              new Channel(
+                this,
+                (
+                  dispatch.payload as WebsocketDispatchTypes["ChannelCreate"]
+                ).channel
+              )
+            );
+            break;
+          case "ChannelPositionUpdate": {
+            const data =
+              dispatch.payload as WebsocketDispatchTypes["ChannelPositionUpdate"];
+
+            this.emit(
+              "channelPositionUpdate",
+              await this.servers.fetch(dispatch.guildId),
+              data.channels
             );
             break;
           }

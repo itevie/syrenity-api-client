@@ -13,6 +13,11 @@ export interface ChannelAPIData {
   position: number;
 }
 
+export interface ChannelEditOptions {
+  name?: string;
+  position?: number;
+}
+
 export default class Channel extends ChannelBase {
   public type: "channel" | "dm";
   public guildId: number | null;
@@ -38,6 +43,17 @@ export default class Channel extends ChannelBase {
     this.name = data.name;
     this.nsfw = data.is_nsfw;
     this.position = data.position;
+  }
+
+  public async edit(options: ChannelEditOptions) {
+    const result = await this.client.rest.patch<ChannelAPIData>(
+      `/api/channels/${this.id}`,
+      options
+    );
+    return this.client.channels.addCache(
+      result.data.id,
+      new Channel(this.client, result.data)
+    );
   }
 
   public strip() {

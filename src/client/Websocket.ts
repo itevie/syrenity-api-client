@@ -1,7 +1,9 @@
-import { MemberAPIData } from "../structures/Member";
-import { MessageAPIData } from "../structures/Message";
+import Channel, { ChannelAPIData } from "../structures/Channel";
+import Member, { MemberAPIData } from "../structures/Member";
+import Message, { MessageAPIData } from "../structures/Message";
 import { UserReactionApiData } from "../structures/Reaction";
-import { UserAPIData } from "../structures/User";
+import Server, { ServerAPIData } from "../structures/Server";
+import User, { UserAPIData } from "../structures/User";
 
 export type WebsocketMessageType =
   | "Authenticate"
@@ -35,6 +37,14 @@ export interface WebsocketDispatchTypes {
     member: MemberAPIData;
   };
 
+  ChannelCreate: {
+    channel: ChannelAPIData;
+  };
+
+  ChannelPositionUpdate: {
+    channels: number[];
+  };
+
   UserUpdate: {
     user: UserAPIData;
   };
@@ -48,6 +58,33 @@ export interface WebsocketDispatchTypes {
     reaction: UserReactionApiData;
     new_message: MessageAPIData;
   };
+}
+
+export interface ClientEvents {
+  debug: [message: string];
+  ready: [user: User, isReconnect: boolean];
+  disconnect: [];
+  reconnect: [];
+  error: [error: any];
+
+  messageCreate: [message: Message];
+  messageDelete: [messageId: number, channelId: number];
+  messageUpdate: [message: Message];
+
+  messageReactionAdd: [reaction: UserReactionApiData, message: Message];
+  messageReactionRemove: [reaction: UserReactionApiData, message: Message];
+
+  serverMemberAdd: [member: Member];
+  serverMemberRemove: [member: Member];
+
+  channelCreate: [channel: Channel];
+  channelPositionUpdate: [server: Server, channels: number[]];
+
+  userUpdate: [user: User];
+
+  apiUserClassCreation: [user: UserAPIData];
+  apiMessageClassCreation: [message: MessageAPIData];
+  apiServerClassCreation: [server: ServerAPIData];
 }
 
 // ----- Payloads -----
