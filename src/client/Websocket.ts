@@ -37,6 +37,10 @@ export interface WebsocketDispatchTypes {
     member: MemberAPIData;
   };
 
+  ServerUpdate: {
+    server: ServerAPIData;
+  };
+
   ChannelCreate: {
     channel: ChannelAPIData;
   };
@@ -76,6 +80,7 @@ export interface ClientEvents {
 
   serverMemberAdd: [member: Member];
   serverMemberRemove: [member: Member];
+  serverUpdate: [server: Server];
 
   channelCreate: [channel: Channel];
   channelPositionUpdate: [server: Server, channels: number[]];
@@ -86,6 +91,9 @@ export interface ClientEvents {
   apiMessageClassCreation: [message: MessageAPIData];
   apiServerClassCreation: [server: ServerAPIData];
 }
+export type ClientEventFunction<T extends keyof ClientEvents> = (
+  ...args: ClientEvents[T]
+) => void;
 
 // ----- Payloads -----
 export type PayloadHello = UserAPIData;

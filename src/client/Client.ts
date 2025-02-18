@@ -4,6 +4,7 @@ import ChannelManager from "../managers/ChannelManager";
 import ServerManager from "../managers/ServerManager";
 import EventEmitter from "events";
 import {
+  ClientEventFunction,
   ClientEvents,
   PayloadDispatch,
   PayloadHello,
@@ -41,6 +42,10 @@ export default interface Client {
     event: T,
     ...args: ClientEvents[T]
   ): boolean;
+  removeListener<T extends keyof ClientEvents>(
+    event: T,
+    callback: ClientEventFunction<T>
+  ): this;
 }
 
 export default class Client extends EventEmitter {
@@ -190,6 +195,28 @@ export default class Client extends EventEmitter {
                 (
                   dispatch.payload as WebsocketDispatchTypes["ServerMemberAdd"]
                 ).member
+              )
+            );
+            break;
+          case "ServerMemberRemove":
+            this.emit(
+              "serverMemberRemove",
+              new Member(
+                this,
+                (
+                  dispatch.payload as WebsocketDispatchTypes["ServerMemberRemove"]
+                ).member
+              )
+            );
+            break;
+          case "ServerUpdate":
+            this.emit(
+              "serverUpdate",
+              new Server(
+                this,
+                (
+                  dispatch.payload as WebsocketDispatchTypes["ServerUpdate"]
+                ).server
               )
             );
             break;

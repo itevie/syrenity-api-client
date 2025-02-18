@@ -72,6 +72,18 @@ export default class Message extends Base {
     return new Message(this.client, result.data);
   }
 
+  public async pin(): Promise<void> {
+    await this.client.rest.post(
+      `/api/channels/${this.channelID}/pins/${this.id}`
+    );
+  }
+
+  public async unpin(): Promise<void> {
+    await this.client.rest.delete(
+      `/api/channels/${this.channelID}/pins/${this.id}`
+    );
+  }
+
   public strip() {
     return {
       id: this.id,

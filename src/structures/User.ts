@@ -14,10 +14,12 @@ export interface UserAPIData {
   email: string;
   email_verified: boolean;
   created_at: string;
+  profile_banner: string | null;
 }
 
 export interface UserEditOptions {
   avatar?: string;
+  profile_banner?: string;
 }
 
 export default class User extends Base {
@@ -30,6 +32,7 @@ export default class User extends Base {
   public email: string;
   public emailVerified: boolean;
   public createdAt: Date;
+  public profileBanner: File;
 
   constructor(client: Client, options: UserAPIData) {
     super(client);
@@ -39,6 +42,7 @@ export default class User extends Base {
     this.id = options.id;
     this.username = options.username;
     this.avatar = new File(client, options.avatar);
+    this.profileBanner = new File(client, options.profile_banner);
     this.isBot = options.is_bot;
     this.about = options.about_me;
     this.discriminator = options.discriminator;

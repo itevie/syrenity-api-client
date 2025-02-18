@@ -14,6 +14,11 @@ export interface ServerAPIData {
   avatar: string | null;
 }
 
+export interface EditServerOptions {
+  name?: string;
+  avatar?: string;
+}
+
 export default class Server extends Base {
   public id: number;
   public name: string;
@@ -44,6 +49,23 @@ export default class Server extends Base {
 
   public async fetchOwner(): Promise<User> {
     return await this.client.users.fetch(this.id);
+  }
+
+  public async edit(options: EditServerOptions): Promise<Server> {
+    const result = await this.client.rest.patch<ServerAPIData>(
+      `/api/servers/${this.id}`,
+      options
+    );
+    return this.client.servers.addCache(
+      result.data.id,
+      new Server(this.client, result.data)
+    );
+  }
+
+  public async leave(): Promise<void> {
+    await this.client.rest.delete(
+      `/api/users/${this.client.user.id}/servers/${this.id}`
+    );
   }
 
   public strip() {
