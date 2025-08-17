@@ -12,7 +12,7 @@ export default class BaseManager<ID, CLASS, DATA_CLASS = {}> {
 
   public async handle(
     id: ID,
-    cb: () => Axios.IPromise<Axios.AxiosXHR<DATA_CLASS>>
+    cb: () => Axios.IPromise<Axios.AxiosXHR<DATA_CLASS>>,
   ): Promise<DATA_CLASS> {
     // Check if it is currently being fetched
     if (this.loading.has(id)) return (await this.loading.get(id)).data;

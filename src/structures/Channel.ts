@@ -1,5 +1,4 @@
 import Client from "../client/Client";
-import Base from "./Base";
 import ChannelMessageManager from "../managers/ChannelMessageManager";
 import ChannelBase from "./ChannelBase";
 
@@ -48,12 +47,16 @@ export default class Channel extends ChannelBase {
   public async edit(options: ChannelEditOptions) {
     const result = await this.client.rest.patch<ChannelAPIData>(
       `/api/channels/${this.id}`,
-      options
+      options,
     );
     return this.client.channels.addCache(
       result.data.id,
-      new Channel(this.client, result.data)
+      new Channel(this.client, result.data),
     );
+  }
+
+  public async startTyping(): Promise<void> {
+    await this.client.rest.post(`/api/channels/${this.id}/start-typing`);
   }
 
   public strip() {

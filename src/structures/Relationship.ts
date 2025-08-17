@@ -10,6 +10,7 @@ export interface RelationshipAPIData {
   user2: UserAPIData;
   last_message: string;
   active: boolean;
+  created_at: string;
 }
 
 export default class Relationship extends Base {
@@ -19,6 +20,7 @@ export default class Relationship extends Base {
   public user2: User;
   public lastMessage: Date;
   public active: boolean;
+  public createdAt: Date;
 
   constructor(client: Client, data: RelationshipAPIData) {
     super(client);
@@ -29,6 +31,7 @@ export default class Relationship extends Base {
     this.user2 = new User(client, data.user2);
     this.lastMessage = new Date(data.last_message);
     this.active = data.active;
+    this.createdAt = new Date(data.created_at);
   }
 
   get recipient() {

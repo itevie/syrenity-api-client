@@ -7,8 +7,11 @@ export default class ChannelManager extends BaseManager<number, Channel> {
     super(client);
   }
 
-  public async fetch(id: number): Promise<Channel> {
-    let channel = await this.client.rest.get<ChannelAPIData>(`/api/channels/${id}`);
+  public async fetch(id: number, force: boolean = false): Promise<Channel> {
+    if (!force && this.cache.has(id)) return this.cache.get(id);
+    let channel = await this.client.rest.get<ChannelAPIData>(
+      `/api/channels/${id}`,
+    );
     return new Channel(this.client, channel.data);
   }
 }

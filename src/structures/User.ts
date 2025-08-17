@@ -1,6 +1,8 @@
 import Client from "../client/Client";
+import Application, { ApplicationAPIData } from "./Application";
 import Base from "./Base";
 import File from "./FileBase";
+import FriendRequest, { FriendRequestAPIData } from "./FriendRequest";
 import Relationship, { RelationshipAPIData } from "./Relationship";
 import Server, { ServerAPIData } from "./Server";
 
@@ -33,9 +35,11 @@ export default class User extends Base {
   public emailVerified: boolean;
   public createdAt: Date;
   public profileBanner: File;
+  public data: UserAPIData;
 
   constructor(client: Client, options: UserAPIData) {
     super(client);
+    this.data = options;
 
     client.emit("apiUserClassCreation", options);
 
@@ -53,26 +57,40 @@ export default class User extends Base {
 
   public async fetchServers(): Promise<Server[]> {
     let result = await this.client.rest.get<ServerAPIData[]>(
-      `/api/users/${this.id}/servers`
+      `/api/users/${this.id}/servers`,
     );
     return (result.data ?? []).map((x) => new Server(this.client, x));
   }
 
   public async fetchRelationships(): Promise<Relationship[]> {
     const result = await this.client.rest.get<RelationshipAPIData[]>(
-      `/api/users/${this.id}/relationships`
+      `/api/users/${this.id}/relationships`,
     );
     return result.data.map((x) => new Relationship(this.client, x));
+  }
+
+  public async fetchFriendRequests(): Promise<FriendRequest[]> {
+    const result = await this.client.rest.get<FriendRequestAPIData[]>(
+      `/api/users/${this.id}/friend_requests`,
+    );
+    return result.data.map((x) => new FriendRequest(this.client, x));
+  }
+
+  public async fetchApplications(): Promise<Application[]> {
+    const result = await this.client.rest.get<ApplicationAPIData[]>(
+      `/api/users/${this.id}/applications`,
+    );
+    return result.data.map((x) => new Application(this.client, x));
   }
 
   public async edit(options: UserEditOptions): Promise<User> {
     const result = await this.client.rest.patch<UserAPIData>(
       `/api/users/${this.id}`,
-      options
+      options,
     );
     return this.client.users.addCache(
       result.data.id,
-      new User(this.client, result.data)
+      new User(this.client, result.data),
     );
   }
 }

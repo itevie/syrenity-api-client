@@ -9,7 +9,8 @@ export type WebsocketMessageType =
   | "Authenticate"
   | "Hello"
   | "Identify"
-  | "Dispatch";
+  | "Dispatch"
+  | "Heartbeat";
 
 export interface WebsocketMessage {
   type: WebsocketMessageType;
@@ -49,6 +50,11 @@ export interface WebsocketDispatchTypes {
     channels: number[];
   };
 
+  ChannelStartTyping: {
+    channel_id: number;
+    user_id: number;
+  };
+
   UserUpdate: {
     user: UserAPIData;
   };
@@ -84,6 +90,7 @@ export interface ClientEvents {
 
   channelCreate: [channel: Channel];
   channelPositionUpdate: [server: Server, channels: number[]];
+  channelStartTyping: [channelId: Channel, userId: User];
 
   userUpdate: [user: User];
 

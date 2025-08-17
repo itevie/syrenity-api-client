@@ -18,7 +18,6 @@ import Server, { ServerAPIData } from "../structures/Server";
 import FileManager from "../managers/FileManager";
 import InviteManager from "../managers/InviteManager";
 import Member from "../structures/Member";
-import { UserReactionApiData } from "../structures/Reaction";
 import Channel from "../structures/Channel";
 
 interface ClientOptions {
@@ -36,7 +35,7 @@ const defaultClientOptions: ClientOptions = {
 export default interface Client {
   on<T extends keyof ClientEvents>(
     event: T,
-    listener: (...args: ClientEvents[T]) => any
+    listener: (...args: ClientEvents[T]) => any,
   ): this;
   emit<T extends keyof ClientEvents>(
     event: T,
@@ -44,7 +43,7 @@ export default interface Client {
   ): boolean;
   removeListener<T extends keyof ClientEvents>(
     event: T,
-    callback: ClientEventFunction<T>
+    callback: ClientEventFunction<T>,
   ): this;
 }
 
@@ -86,7 +85,7 @@ export default class Client extends EventEmitter {
     const retry = () => {
       this.debug(
         "ws",
-        `Attempting reconnect in ${this.options.reconnectTimeout}ms...`
+        `Attempting reconnect in ${this.options.reconnectTimeout}ms...`,
       );
       setTimeout(() => {
         this.connect(token);
@@ -102,7 +101,6 @@ export default class Client extends EventEmitter {
       if (this.firstConnect) {
         this.emit("error", err);
       } else {
-        retry();
       }
     });
 
@@ -130,7 +128,7 @@ export default class Client extends EventEmitter {
       JSON.stringify({
         type,
         payload: message,
-      })
+      }),
     );
   }
 
@@ -149,6 +147,9 @@ export default class Client extends EventEmitter {
         this.emit("ready", user, !this.firstConnect);
         this.firstConnect = false;
         break;
+      case "Heartbeat":
+        this.sendWebsocketMessage("Heartbeat", {});
+        break;
       case "Dispatch":
         let dispatch = message.payload as PayloadDispatch<any>;
 
@@ -156,7 +157,7 @@ export default class Client extends EventEmitter {
           case "MessageCreate":
             this.emit(
               "messageCreate",
-              new Message(this, dispatch.payload.message as MessageAPIData)
+              new Message(this, dispatch.payload.message as MessageAPIData),
             );
             break;
           case "MessageDelete":
@@ -164,7 +165,7 @@ export default class Client extends EventEmitter {
               "messageDelete",
               (dispatch.payload as WebsocketDispatchTypes["MessageDelete"])
                 .message_id,
-              dispatch.channelId
+              dispatch.channelId,
             );
             break;
           case "MessageUpdate":
@@ -174,8 +175,8 @@ export default class Client extends EventEmitter {
                 this,
                 (
                   dispatch.payload as WebsocketDispatchTypes["MessageUpdate"]
-                ).message
-              )
+                ).message,
+              ),
             );
             break;
           case "UserUpdate":
@@ -183,8 +184,8 @@ export default class Client extends EventEmitter {
               "userUpdate",
               new User(
                 this,
-                (dispatch.payload as WebsocketDispatchTypes["UserUpdate"]).user
-              )
+                (dispatch.payload as WebsocketDispatchTypes["UserUpdate"]).user,
+              ),
             );
             break;
           case "ServerMemberAdd":
@@ -194,8 +195,8 @@ export default class Client extends EventEmitter {
                 this,
                 (
                   dispatch.payload as WebsocketDispatchTypes["ServerMemberAdd"]
-                ).member
-              )
+                ).member,
+              ),
             );
             break;
           case "ServerMemberRemove":
@@ -205,8 +206,8 @@ export default class Client extends EventEmitter {
                 this,
                 (
                   dispatch.payload as WebsocketDispatchTypes["ServerMemberRemove"]
-                ).member
-              )
+                ).member,
+              ),
             );
             break;
           case "ServerUpdate":
@@ -216,8 +217,8 @@ export default class Client extends EventEmitter {
                 this,
                 (
                   dispatch.payload as WebsocketDispatchTypes["ServerUpdate"]
-                ).server
-              )
+                ).server,
+              ),
             );
             break;
           case "MessageReactionAdd": {
@@ -226,7 +227,7 @@ export default class Client extends EventEmitter {
             this.emit(
               "messageReactionAdd",
               data.reaction,
-              new Message(this, data.new_message)
+              new Message(this, data.new_message),
             );
             break;
           }
@@ -236,7 +237,7 @@ export default class Client extends EventEmitter {
             this.emit(
               "messageReactionRemove",
               data.reaction,
-              new Message(this, data.new_message)
+              new Message(this, data.new_message),
             );
             break;
           }
@@ -247,8 +248,8 @@ export default class Client extends EventEmitter {
                 this,
                 (
                   dispatch.payload as WebsocketDispatchTypes["ChannelCreate"]
-                ).channel
-              )
+                ).channel,
+              ),
             );
             break;
           case "ChannelPositionUpdate": {
@@ -258,9 +259,19 @@ export default class Client extends EventEmitter {
             this.emit(
               "channelPositionUpdate",
               await this.servers.fetch(dispatch.guildId),
-              data.channels
+              data.channels,
             );
             break;
+          }
+          case "ChannelStartTyping": {
+            const data =
+              dispatch.payload as WebsocketDispatchTypes["ChannelStartTyping"];
+
+            this.emit(
+              "channelStartTyping",
+              await this.channels.fetch(data.channel_id),
+              await this.users.fetch(data.user_id),
+            );
           }
         }
         break;
@@ -273,4 +284,18 @@ export default class Client extends EventEmitter {
     });
     return this.servers.addCache(result.data.id, new Server(this, result.data));
   }
+
+  public async fetchServerSettings(): Promise<ServerSettings> {
+    return (await this.rest.get<ServerSettings>("/api")).data;
+  }
+}
+
+export interface ServerSettings {
+  version: {
+    git: {
+      id: string;
+      abbrId: string;
+      message: string;
+    };
+  };
 }
