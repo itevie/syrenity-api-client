@@ -8,6 +8,6 @@ export default class ChannelManager extends BaseManager {
         if (!force && this.cache.has(id))
             return this.cache.get(id);
         let channel = await this.client.rest.get(`/api/channels/${id}`);
-        return new Channel(this.client, channel.data);
+        return this.addCache(id, new Channel(this.client, channel.data));
     }
 }

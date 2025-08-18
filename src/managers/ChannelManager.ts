@@ -12,6 +12,6 @@ export default class ChannelManager extends BaseManager<number, Channel> {
     let channel = await this.client.rest.get<ChannelAPIData>(
       `/api/channels/${id}`,
     );
-    return new Channel(this.client, channel.data);
+    return this.addCache(id, new Channel(this.client, channel.data));
   }
 }

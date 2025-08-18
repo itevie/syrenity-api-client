@@ -32,6 +32,18 @@ const defaultClientOptions: ClientOptions = {
   reconnectTimeout: 5000,
 };
 
+let WS: typeof WebSocket;
+
+if (typeof WebSocket !== "undefined") {
+  // Browser environment
+  WS = WebSocket;
+} else {
+  // Node environment
+  // Dynamically import to avoid bundler issues
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  WS = require("ws");
+}
+
 export default interface Client {
   on<T extends keyof ClientEvents>(
     event: T,
@@ -76,7 +88,7 @@ export default class Client extends EventEmitter {
     this.debug("ws", `Attempting to connect to: ${this.options.websocketUrl}`);
 
     // @ts-ignore
-    this.ws = new WebSocket(this.options.websocketUrl);
+    this.ws = new WS(this.options.websocketUrl);
 
     this.ws.addEventListener("message", (msg) => {
       this.handleWebsocketMessage(JSON.parse(msg.data));

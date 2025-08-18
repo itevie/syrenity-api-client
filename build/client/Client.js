@@ -15,6 +15,17 @@ const defaultClientOptions = {
     websocketUrl: "http://localhost:3000/ws",
     reconnectTimeout: 5000,
 };
+let WS;
+if (typeof WebSocket !== "undefined") {
+    // Browser environment
+    WS = WebSocket;
+}
+else {
+    // Node environment
+    // Dynamically import to avoid bundler issues
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    WS = require("ws");
+}
 export default class Client extends EventEmitter {
     options;
     token = null;
@@ -35,7 +46,7 @@ export default class Client extends EventEmitter {
         this.token = token;
         this.debug("ws", `Attempting to connect to: ${this.options.websocketUrl}`);
         // @ts-ignore
-        this.ws = new WebSocket(this.options.websocketUrl);
+        this.ws = new WS(this.options.websocketUrl);
         this.ws.addEventListener("message", (msg) => {
             this.handleWebsocketMessage(JSON.parse(msg.data));
         });
