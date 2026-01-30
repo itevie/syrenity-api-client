@@ -1,5 +1,5 @@
-import ChannelMessageManager from "../managers/ChannelMessageManager";
-import ChannelBase from "./ChannelBase";
+import ChannelMessageManager from "../managers/ChannelMessageManager.js";
+import ChannelBase from "./ChannelBase.js";
 export default class Channel extends ChannelBase {
     type;
     guildId;

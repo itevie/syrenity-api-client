@@ -1,9 +1,9 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import User from "./User";
-import ServerChannelManager from "../managers/ServerChannelManager";
-import File from "./FileBase";
-import ServerInviteManager from "../managers/ServerInviteManager";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import User from "./User.js";
+import ServerChannelManager from "../managers/ServerChannelManager.js";
+import File from "./FileBase.js";
+import ServerInviteManager from "../managers/ServerInviteManager.js";
 export interface ServerAPIData {
     id: number;
     name: string;
@@ -36,3 +36,4 @@ export default class Server extends Base {
         readonly avatar: File;
     };
 }
+//# sourceMappingURL=Server.d.ts.map

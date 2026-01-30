@@ -1,5 +1,5 @@
-import Client from "../client/Client";
-import Base from "./Base";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
 
 export interface FriendRequestAPIData {
   for_user: number;

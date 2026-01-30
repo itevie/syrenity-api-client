@@ -1,4 +1,4 @@
-import Client from "../client/Client";
+import Client from "../client/Client.js";
 
 export default class BaseManager<ID, CLASS, DATA_CLASS = {}> {
   protected client: Client;

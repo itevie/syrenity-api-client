@@ -1,5 +1,5 @@
-import Client from "../client/Client";
-import Base from "./Base";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
 export interface FriendRequestAPIData {
     for_user: number;
     by_user: number;
@@ -12,3 +12,4 @@ export default class FriendRequest extends Base {
     _data: FriendRequestAPIData;
     constructor(client: Client, data: FriendRequestAPIData);
 }
+//# sourceMappingURL=FriendRequest.d.ts.map

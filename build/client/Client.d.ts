@@ -1,12 +1,12 @@
-import UserManager from "../managers/UserManager";
-import ChannelManager from "../managers/ChannelManager";
-import ServerManager from "../managers/ServerManager";
+import UserManager from "../managers/UserManager.js";
+import ChannelManager from "../managers/ChannelManager.js";
+import ServerManager from "../managers/ServerManager.js";
 import EventEmitter from "events";
-import { ClientEventFunction, ClientEvents } from "./Websocket";
-import User from "../structures/User";
-import Server from "../structures/Server";
-import FileManager from "../managers/FileManager";
-import InviteManager from "../managers/InviteManager";
+import { ClientEventFunction, ClientEvents } from "./Websocket.js";
+import User from "../structures/User.js";
+import Server from "../structures/Server.js";
+import FileManager from "../managers/FileManager.js";
+import InviteManager from "../managers/InviteManager.js";
 interface ClientOptions {
     baseUrl?: string;
     websocketUrl?: string;
@@ -47,3 +47,4 @@ export interface ServerSettings {
     };
 }
 export {};
+//# sourceMappingURL=Client.d.ts.map

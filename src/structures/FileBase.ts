@@ -1,6 +1,6 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import File, { FileAPIData } from "./File";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import File, { FileAPIData } from "./File.js";
 
 export const allowedSizes = [32, 64, 128, 256, 512, 1024, 2048];
 
@@ -13,7 +13,7 @@ export default class FileBase extends Base {
 
     if (
       url?.match(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
       )
     ) {
       this.id = url;
@@ -33,11 +33,11 @@ export default class FileBase extends Base {
 
   public static check(
     url: string | null,
-    size: (typeof allowedSizes)[number] = null
+    size: (typeof allowedSizes)[number] = null,
   ) {
     if (
       url?.match(
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i,
       )
     ) {
       return `/files/${url}${size ? `?size=${size}` : ""}`;

@@ -1,16 +1,16 @@
-import Application from "./Application";
-import Base from "./Base";
-import File from "./FileBase";
-import FriendRequest from "./FriendRequest";
-import Relationship from "./Relationship";
-import Server from "./Server";
+import Application from "./Application.js";
+import Base from "./Base.js";
+import Channel from "./Channel.js";
+import File from "./FileBase.js";
+import FriendRequest from "./FriendRequest.js";
+import Relationship from "./Relationship.js";
+import Server from "./Server.js";
 export default class User extends Base {
     id;
     username;
     avatar;
     isBot;
     about;
-    discriminator;
     email;
     emailVerified;
     createdAt;
@@ -26,7 +26,6 @@ export default class User extends Base {
         this.profileBanner = new File(client, options.profile_banner);
         this.isBot = options.is_bot;
         this.about = options.about_me;
-        this.discriminator = options.discriminator;
         this.email = options.email;
         this.emailVerified = options.email_verified;
         this.createdAt = new Date(options.created_at);
@@ -50,5 +49,12 @@ export default class User extends Base {
     async edit(options) {
         const result = await this.client.rest.patch(`/api/users/${this.id}`, options);
         return this.client.users.addCache(result.data.id, new User(this.client, result.data));
+    }
+    async ensureRelationshipWith(userId) {
+        let result = await this.client.rest.post(`/api/users/${this.id}/relationships/${userId}/ensure`);
+        return {
+            channel: new Channel(this.client, result.data.channel),
+            relationship: new Relationship(this.client, result.data.relationship),
+        };
     }
 }

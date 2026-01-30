@@ -1,5 +1,5 @@
-import Server from "../structures/Server";
-import BaseManager from "./BaseManager";
+import Server from "../structures/Server.js";
+import BaseManager from "./BaseManager.js";
 export default class ServerManager extends BaseManager {
     constructor(client) {
         super(client);

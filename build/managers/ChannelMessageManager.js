@@ -1,5 +1,5 @@
-import BaseManager from "./BaseManager";
-import Message from "../structures/Message";
+import BaseManager from "./BaseManager.js";
+import Message from "../structures/Message.js";
 export default class ChannelMessageManager extends BaseManager {
     channel;
     constructor(client, channel) {

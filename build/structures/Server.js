@@ -1,7 +1,7 @@
-import Base from "./Base";
-import ServerChannelManager from "../managers/ServerChannelManager";
-import File from "./FileBase";
-import ServerInviteManager from "../managers/ServerInviteManager";
+import Base from "./Base.js";
+import ServerChannelManager from "../managers/ServerChannelManager.js";
+import File from "./FileBase.js";
+import ServerInviteManager from "../managers/ServerInviteManager.js";
 export default class Server extends Base {
     id;
     name;

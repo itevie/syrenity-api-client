@@ -5,3 +5,4 @@ export interface ProxyUserAPIData {
     owner_id: number | null;
     created_at: string;
 }
+//# sourceMappingURL=ProxyUser.d.ts.map

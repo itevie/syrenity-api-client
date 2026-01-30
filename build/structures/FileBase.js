@@ -1,4 +1,4 @@
-import Base from "./Base";
+import Base from "./Base.js";
 export const allowedSizes = [32, 64, 128, 256, 512, 1024, 2048];
 export default class FileBase extends Base {
     url;

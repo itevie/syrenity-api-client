@@ -1,0 +1,1 @@
+{"version":3,"file":"ProxyUser.d.ts","sourceRoot":"","sources":["../../src/structures/ProxyUser.ts"],"names":[],"mappings":"AAAA,MAAM,WAAW,gBAAgB;IAC/B,EAAE,EAAE,MAAM,CAAC;IACX,QAAQ,EAAE,MAAM,CAAC;IACjB,MAAM,EAAE,MAAM,GAAG,IAAI,CAAC;IACtB,QAAQ,EAAE,MAAM,GAAG,IAAI,CAAC;IACxB,UAAU,EAAE,MAAM,CAAC;CACpB"}

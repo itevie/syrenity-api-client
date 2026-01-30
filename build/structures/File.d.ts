@@ -1,5 +1,5 @@
-import Client from "../client/Client";
-import FileBase from "./FileBase";
+import Client from "../client/Client.js";
+import FileBase from "./FileBase.js";
 export interface FileAPIData {
     id: string;
     created_at: string;
@@ -12,3 +12,4 @@ export default class File extends FileBase {
     originalUrl: string | null;
     constructor(client: Client, data: FileAPIData);
 }
+//# sourceMappingURL=File.d.ts.map

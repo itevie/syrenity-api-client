@@ -1,4 +1,4 @@
-import FileBase from "./FileBase";
+import FileBase from "./FileBase.js";
 export default class File extends FileBase {
     createdAt;
     fileName;

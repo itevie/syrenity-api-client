@@ -1,4 +1,4 @@
-import { ProxyUserAPIData } from "./ProxyUser";
+import { ProxyUserAPIData } from "./ProxyUser.js";
 
 export interface WebhookAPIData {
   id: string;

@@ -1,4 +1,4 @@
-import { ProxyUserAPIData } from "./ProxyUser";
+import { ProxyUserAPIData } from "./ProxyUser.js";
 export interface WebhookAPIData {
     id: string;
     proxy_user_id: number;
@@ -9,3 +9,4 @@ export interface WebhookAPIData {
     creator_id: number;
     created_at: Date;
 }
+//# sourceMappingURL=Webhook.d.ts.map

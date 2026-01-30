@@ -1,6 +1,6 @@
-import Client from "../client/Client";
-import ChannelMessageManager from "../managers/ChannelMessageManager";
-import ChannelBase from "./ChannelBase";
+import Client from "../client/Client.js";
+import ChannelMessageManager from "../managers/ChannelMessageManager.js";
+import ChannelBase from "./ChannelBase.js";
 export interface ChannelAPIData {
     id: number;
     type: "channel" | "dm";
@@ -35,3 +35,4 @@ export default class Channel extends ChannelBase {
         readonly nsfw: string;
     };
 }
+//# sourceMappingURL=Channel.d.ts.map

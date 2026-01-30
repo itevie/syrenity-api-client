@@ -1,4 +1,4 @@
-import Client from "../client/Client";
+import Client from "../client/Client.js";
 export default class BaseManager<ID, CLASS, DATA_CLASS = {}> {
     protected client: Client;
     cache: Map<ID, CLASS>;
@@ -8,3 +8,4 @@ export default class BaseManager<ID, CLASS, DATA_CLASS = {}> {
     getCache(id: ID): CLASS | null;
     addCache(id: ID, value: CLASS): CLASS;
 }
+//# sourceMappingURL=BaseManager.d.ts.map

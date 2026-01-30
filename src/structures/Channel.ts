@@ -1,6 +1,6 @@
-import Client from "../client/Client";
-import ChannelMessageManager from "../managers/ChannelMessageManager";
-import ChannelBase from "./ChannelBase";
+import Client from "../client/Client.js";
+import ChannelMessageManager from "../managers/ChannelMessageManager.js";
+import ChannelBase from "./ChannelBase.js";
 
 export interface ChannelAPIData {
   id: number;

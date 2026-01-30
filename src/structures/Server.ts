@@ -1,10 +1,10 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import User from "./User";
-import ServerChannelManager from "../managers/ServerChannelManager";
-import Channel, { ChannelAPIData } from "./Channel";
-import File from "./FileBase";
-import ServerInviteManager from "../managers/ServerInviteManager";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import User from "./User.js";
+import ServerChannelManager from "../managers/ServerChannelManager.js";
+import Channel, { ChannelAPIData } from "./Channel.js";
+import File from "./FileBase.js";
+import ServerInviteManager from "../managers/ServerInviteManager.js";
 
 export interface ServerAPIData {
   id: number;
@@ -54,17 +54,17 @@ export default class Server extends Base {
   public async edit(options: EditServerOptions): Promise<Server> {
     const result = await this.client.rest.patch<ServerAPIData>(
       `/api/servers/${this.id}`,
-      options
+      options,
     );
     return this.client.servers.addCache(
       result.data.id,
-      new Server(this.client, result.data)
+      new Server(this.client, result.data),
     );
   }
 
   public async leave(): Promise<void> {
     await this.client.rest.delete(
-      `/api/users/${this.client.user.id}/servers/${this.id}`
+      `/api/users/${this.client.user.id}/servers/${this.id}`,
     );
   }
 

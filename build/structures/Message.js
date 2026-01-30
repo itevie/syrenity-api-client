@@ -1,7 +1,7 @@
-import Base from "./Base";
-import FileBase from "./FileBase";
-import Reaction from "./Reaction";
-import User from "./User";
+import Base from "./Base.js";
+import FileBase from "./FileBase.js";
+import Reaction from "./Reaction.js";
+import User from "./User.js";
 export default class Message extends Base {
     id;
     content;

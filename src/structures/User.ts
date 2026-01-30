@@ -1,10 +1,11 @@
-import Client from "../client/Client";
-import Application, { ApplicationAPIData } from "./Application";
-import Base from "./Base";
-import File from "./FileBase";
-import FriendRequest, { FriendRequestAPIData } from "./FriendRequest";
-import Relationship, { RelationshipAPIData } from "./Relationship";
-import Server, { ServerAPIData } from "./Server";
+import Client from "../client/Client.js";
+import Application, { ApplicationAPIData } from "./Application.js";
+import Base from "./Base.js";
+import Channel, { ChannelAPIData } from "./Channel.js";
+import File from "./FileBase.js";
+import FriendRequest, { FriendRequestAPIData } from "./FriendRequest.js";
+import Relationship, { RelationshipAPIData } from "./Relationship.js";
+import Server, { ServerAPIData } from "./Server.js";
 
 export interface UserAPIData {
   id: number;
@@ -12,7 +13,6 @@ export interface UserAPIData {
   avatar: string;
   is_bot: boolean;
   about_me: string;
-  discriminator: string;
   email: string;
   email_verified: boolean;
   created_at: string;
@@ -22,6 +22,8 @@ export interface UserAPIData {
 export interface UserEditOptions {
   avatar?: string;
   profile_banner?: string;
+  about_me?: string;
+  username?: string;
 }
 
 export default class User extends Base {
@@ -30,7 +32,6 @@ export default class User extends Base {
   public avatar: File;
   public isBot: boolean;
   public about: string;
-  public discriminator: string;
   public email: string;
   public emailVerified: boolean;
   public createdAt: Date;
@@ -49,7 +50,6 @@ export default class User extends Base {
     this.profileBanner = new File(client, options.profile_banner);
     this.isBot = options.is_bot;
     this.about = options.about_me;
-    this.discriminator = options.discriminator;
     this.email = options.email;
     this.emailVerified = options.email_verified;
     this.createdAt = new Date(options.created_at);
@@ -92,5 +92,19 @@ export default class User extends Base {
       result.data.id,
       new User(this.client, result.data),
     );
+  }
+
+  public async ensureRelationshipWith(
+    userId: number,
+  ): Promise<{ channel: Channel; relationship: Relationship }> {
+    let result = await this.client.rest.post<{
+      channel: ChannelAPIData;
+      relationship: RelationshipAPIData;
+    }>(`/api/users/${this.id}/relationships/${userId}/ensure`);
+
+    return {
+      channel: new Channel(this.client, result.data.channel),
+      relationship: new Relationship(this.client, result.data.relationship),
+    };
   }
 }

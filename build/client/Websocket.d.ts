@@ -1,9 +1,9 @@
-import Channel, { ChannelAPIData } from "../structures/Channel";
-import Member, { MemberAPIData } from "../structures/Member";
-import Message, { MessageAPIData } from "../structures/Message";
-import { UserReactionApiData } from "../structures/Reaction";
-import Server, { ServerAPIData } from "../structures/Server";
-import User, { UserAPIData } from "../structures/User";
+import Channel, { ChannelAPIData } from "../structures/Channel.js";
+import Member, { MemberAPIData } from "../structures/Member.js";
+import Message, { MessageAPIData } from "../structures/Message.js";
+import { UserReactionApiData } from "../structures/Reaction.js";
+import Server, { ServerAPIData } from "../structures/Server.js";
+import User, { UserAPIData } from "../structures/User.js";
 export type WebsocketMessageType = "Authenticate" | "Hello" | "Identify" | "Dispatch" | "Heartbeat";
 export interface WebsocketMessage {
     type: WebsocketMessageType;
@@ -81,3 +81,4 @@ export interface PayloadDispatch<T extends keyof WebsocketDispatchTypes> {
     type: T;
     payload: WebsocketDispatchTypes[T];
 }
+//# sourceMappingURL=Websocket.d.ts.map

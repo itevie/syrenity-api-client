@@ -1,7 +1,7 @@
-import Client from "../client/Client";
+import Client from "../client/Client.js";
 
 export default class Base {
-  protected client: Client;
+  protected client!: Client;
 
   constructor(client: Client) {
     this.client = client;

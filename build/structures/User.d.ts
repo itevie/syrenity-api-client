@@ -1,17 +1,17 @@
-import Client from "../client/Client";
-import Application from "./Application";
-import Base from "./Base";
-import File from "./FileBase";
-import FriendRequest from "./FriendRequest";
-import Relationship from "./Relationship";
-import Server from "./Server";
+import Client from "../client/Client.js";
+import Application from "./Application.js";
+import Base from "./Base.js";
+import Channel from "./Channel.js";
+import File from "./FileBase.js";
+import FriendRequest from "./FriendRequest.js";
+import Relationship from "./Relationship.js";
+import Server from "./Server.js";
 export interface UserAPIData {
     id: number;
     username: string;
     avatar: string;
     is_bot: boolean;
     about_me: string;
-    discriminator: string;
     email: string;
     email_verified: boolean;
     created_at: string;
@@ -20,6 +20,8 @@ export interface UserAPIData {
 export interface UserEditOptions {
     avatar?: string;
     profile_banner?: string;
+    about_me?: string;
+    username?: string;
 }
 export default class User extends Base {
     id: number;
@@ -27,7 +29,6 @@ export default class User extends Base {
     avatar: File;
     isBot: boolean;
     about: string;
-    discriminator: string;
     email: string;
     emailVerified: boolean;
     createdAt: Date;
@@ -39,4 +40,9 @@ export default class User extends Base {
     fetchFriendRequests(): Promise<FriendRequest[]>;
     fetchApplications(): Promise<Application[]>;
     edit(options: UserEditOptions): Promise<User>;
+    ensureRelationshipWith(userId: number): Promise<{
+        channel: Channel;
+        relationship: Relationship;
+    }>;
 }
+//# sourceMappingURL=User.d.ts.map

@@ -1,0 +1,1 @@
+{"version":3,"file":"TemplateManager.d.ts","sourceRoot":"","sources":["../../src/managers/TemplateManager.ts"],"names":[],"mappings":"AAAA,OAAO,MAAM,MAAM,qBAAqB,CAAC;AACzC,OAAO,WAAW,MAAM,kBAAkB,CAAC;AAE3C,MAAM,CAAC,OAAO,OAAO,QAAS,SAAQ,WAAW,CAAC,OAAO,EAAE,OAAO,CAAC;gBACrD,MAAM,EAAE,MAAM;CAG3B"}

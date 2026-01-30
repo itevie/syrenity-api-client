@@ -1,5 +1,5 @@
-import Base from "./Base";
-import User from "./User";
+import Base from "./Base.js";
+import User from "./User.js";
 export default class Application extends Base {
     id;
     token;

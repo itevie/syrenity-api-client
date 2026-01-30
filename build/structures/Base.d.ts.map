@@ -1,0 +1,1 @@
+{"version":3,"file":"Base.d.ts","sourceRoot":"","sources":["../../src/structures/Base.ts"],"names":[],"mappings":"AAAA,OAAO,MAAM,MAAM,qBAAqB,CAAC;AAEzC,MAAM,CAAC,OAAO,OAAO,IAAI;IACvB,SAAS,CAAC,MAAM,EAAG,MAAM,CAAC;gBAEd,MAAM,EAAE,MAAM;IAInB,KAAK,IAAI,MAAM;CAGvB"}

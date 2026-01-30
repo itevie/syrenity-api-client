@@ -1,5 +1,5 @@
-import Client from "../client/Client";
-import Base from "./Base";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
 export interface ReactionApiData {
     message_id: number;
     emoji: string;
@@ -21,3 +21,4 @@ export default class Reaction extends Base {
     users: number[];
     constructor(client: Client, data: ReactionApiData);
 }
+//# sourceMappingURL=Reaction.d.ts.map

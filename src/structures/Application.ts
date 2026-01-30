@@ -1,6 +1,6 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import User, { UserAPIData } from "./User";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import User, { UserAPIData } from "./User.js";
 
 export interface ApplicationAPIData {
   id: number;

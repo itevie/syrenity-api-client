@@ -1,7 +1,7 @@
 import axios from "axios";
-import UserManager from "../managers/UserManager";
-import ChannelManager from "../managers/ChannelManager";
-import ServerManager from "../managers/ServerManager";
+import UserManager from "../managers/UserManager.js";
+import ChannelManager from "../managers/ChannelManager.js";
+import ServerManager from "../managers/ServerManager.js";
 import EventEmitter from "events";
 import {
   ClientEventFunction,
@@ -11,14 +11,14 @@ import {
   WebsocketDispatchTypes,
   WebsocketMessage,
   WebsocketMessageType,
-} from "./Websocket";
-import User, { UserAPIData } from "../structures/User";
-import Message, { MessageAPIData } from "../structures/Message";
-import Server, { ServerAPIData } from "../structures/Server";
-import FileManager from "../managers/FileManager";
-import InviteManager from "../managers/InviteManager";
-import Member from "../structures/Member";
-import Channel from "../structures/Channel";
+} from "./Websocket.js";
+import User, { UserAPIData } from "../structures/User.js";
+import Message, { MessageAPIData } from "../structures/Message.js";
+import Server, { ServerAPIData } from "../structures/Server.js";
+import FileManager from "../managers/FileManager.js";
+import InviteManager from "../managers/InviteManager.js";
+import Member from "../structures/Member.js";
+import Channel from "../structures/Channel.js";
 
 interface ClientOptions {
   baseUrl?: string;

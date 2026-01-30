@@ -1,13 +1,15 @@
-import Base from "./Base";
-import Channel from "./Channel";
-import User from "./User";
+import Base from "./Base.js";
+import Channel from "./Channel.js";
+import User from "./User.js";
 export default class Relationship extends Base {
     channelId;
     channel;
     user1;
     user2;
     lastMessage;
-    active;
+    activeUser1;
+    activeUser2;
+    isFriends;
     createdAt;
     constructor(client, data) {
         super(client);
@@ -16,7 +18,9 @@ export default class Relationship extends Base {
         this.user1 = new User(client, data.user1);
         this.user2 = new User(client, data.user2);
         this.lastMessage = new Date(data.last_message);
-        this.active = data.active;
+        this.activeUser1 = data.active_user_1;
+        this.activeUser2 = data.active_user_2;
+        this.isFriends = data.is_friends;
         this.createdAt = new Date(data.created_at);
     }
     get recipient() {
@@ -24,5 +28,12 @@ export default class Relationship extends Base {
     }
     get self() {
         return this.client.user.id !== this.user1.id ? this.user2 : this.user1;
+    }
+    clientActive() {
+        return this.activeFor(this.client.user.id);
+    }
+    activeFor(userId) {
+        return ((this.user1.id === userId && this.activeUser1) ||
+            (this.user2.id === userId && this.activeUser2));
     }
 }

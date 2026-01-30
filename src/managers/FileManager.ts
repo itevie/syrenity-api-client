@@ -1,6 +1,6 @@
-import Client from "../client/Client";
-import File, { FileAPIData } from "../structures/File";
-import BaseManager from "./BaseManager";
+import Client from "../client/Client.js";
+import File, { FileAPIData } from "../structures/File.js";
+import BaseManager from "./BaseManager.js";
 
 export default class FileManager extends BaseManager<string, File> {
   constructor(client: Client) {

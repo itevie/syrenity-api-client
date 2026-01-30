@@ -1,7 +1,7 @@
-import Client from "../client/Client";
-import Invite, { InviteAPIData } from "../structures/Invite";
-import Server from "../structures/Server";
-import BaseManager from "./BaseManager";
+import Client from "../client/Client.js";
+import Invite, { InviteAPIData } from "../structures/Invite.js";
+import Server from "../structures/Server.js";
+import BaseManager from "./BaseManager.js";
 
 export default class InviteManager extends BaseManager<string, Invite> {
   constructor(client: Client) {
@@ -11,7 +11,7 @@ export default class InviteManager extends BaseManager<string, Invite> {
   public async fetch(id: string, force: boolean = false) {
     if (this.cache.has(id) && !force) return this.cache.get(id);
     let result = await this.client.rest.get<InviteAPIData>(
-      `/api/invites/${id}`
+      `/api/invites/${id}`,
     );
     return this.addCache(id, new Invite(this.client, result.data));
   }

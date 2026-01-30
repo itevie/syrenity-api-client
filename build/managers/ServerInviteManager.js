@@ -1,5 +1,5 @@
-import Invite from "../structures/Invite";
-import BaseManager from "./BaseManager";
+import Invite from "../structures/Invite.js";
+import BaseManager from "./BaseManager.js";
 export default class ServerInviteManager extends BaseManager {
     server;
     constructor(client, server) {

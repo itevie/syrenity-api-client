@@ -2,18 +2,19 @@
   "compilerOptions": {
     "rootDir": "./src",
     "outDir": "./build",
-    "esModuleInterop": true,
-    "noImplicitReturns": false,
-    "target": "es2022",
-    "module": "esnext",
+
+    "target": "ES2022",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+
     "declaration": true,
-    "allowJs": true,
-    "incremental": false,
-    "moduleResolution": "Node",
-    "typeRoots": ["./src/types", "./node_modules/@types"],
-    "resolveJsonModule": true
+    "declarationMap": true,
+
+    "esModuleInterop": true,
+    "resolveJsonModule": true,
+
+    "strict": false,
+    "skipLibCheck": true,
   },
-  "include": [
-    "src/**/*.ts"
-  ]
+  "include": ["src/**/*.ts"],
 }

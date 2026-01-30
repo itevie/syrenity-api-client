@@ -1,5 +1,5 @@
-import Client from "../client/Client";
-import Base from "./Base";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
 export interface MemberAPIData {
     guild_id: number;
     user_id: number;
@@ -12,3 +12,4 @@ export default class Member extends Base {
     _data: MemberAPIData;
     constructor(client: Client, data: MemberAPIData);
 }
+//# sourceMappingURL=Member.d.ts.map

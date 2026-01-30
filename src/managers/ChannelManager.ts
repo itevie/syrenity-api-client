@@ -1,6 +1,6 @@
-import Client from "../client/Client";
-import Channel, { ChannelAPIData } from "../structures/Channel";
-import BaseManager from "./BaseManager";
+import Client from "../client/Client.js";
+import Channel, { ChannelAPIData } from "../structures/Channel.js";
+import BaseManager from "./BaseManager.js";
 
 export default class ChannelManager extends BaseManager<number, Channel> {
   constructor(client: Client) {

@@ -1,7 +1,7 @@
-import Client from "../client/Client";
-import Channel, { ChannelAPIData } from "../structures/Channel";
-import Server from "../structures/Server";
-import BaseManager from "./BaseManager";
+import Client from "../client/Client.js";
+import Channel, { ChannelAPIData } from "../structures/Channel.js";
+import Server from "../structures/Server.js";
+import BaseManager from "./BaseManager.js";
 
 export default class ServerChannelManager extends BaseManager<number, Channel> {
   private server: Server;
@@ -13,7 +13,7 @@ export default class ServerChannelManager extends BaseManager<number, Channel> {
 
   public async fetchList(): Promise<Channel[]> {
     let result = await this.client.rest.get<ChannelAPIData[]>(
-      `/api/servers/${this.server.id}/channels`
+      `/api/servers/${this.server.id}/channels`,
     );
 
     if (result.status !== 200)
@@ -27,7 +27,7 @@ export default class ServerChannelManager extends BaseManager<number, Channel> {
       `/api/servers/${this.server.id}/channels`,
       {
         name: name,
-      }
+      },
     );
 
     return this.addCache(result.data.id, new Channel(this.client, result.data));

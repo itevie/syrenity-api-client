@@ -1,5 +1,5 @@
-import Client from "../client/Client";
-import FileBase from "./FileBase";
+import Client from "../client/Client.js";
+import FileBase from "./FileBase.js";
 
 export interface FileAPIData {
   id: string;

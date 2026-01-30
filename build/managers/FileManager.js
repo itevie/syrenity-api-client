@@ -1,5 +1,5 @@
-import File from "../structures/File";
-import BaseManager from "./BaseManager";
+import File from "../structures/File.js";
+import BaseManager from "./BaseManager.js";
 export default class FileManager extends BaseManager {
     constructor(client) {
         super(client);

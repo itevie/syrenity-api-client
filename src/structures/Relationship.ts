@@ -1,7 +1,7 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import Channel, { ChannelAPIData } from "./Channel";
-import User, { UserAPIData } from "./User";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import Channel, { ChannelAPIData } from "./Channel.js";
+import User, { UserAPIData } from "./User.js";
 
 export interface RelationshipAPIData {
   channel_id: number;
@@ -9,7 +9,9 @@ export interface RelationshipAPIData {
   user1: UserAPIData;
   user2: UserAPIData;
   last_message: string;
-  active: boolean;
+  active_user_1: boolean;
+  active_user_2: boolean;
+  is_friends: boolean;
   created_at: string;
 }
 
@@ -19,7 +21,9 @@ export default class Relationship extends Base {
   public user1: User;
   public user2: User;
   public lastMessage: Date;
-  public active: boolean;
+  public activeUser1: boolean;
+  public activeUser2: boolean;
+  public isFriends: boolean;
   public createdAt: Date;
 
   constructor(client: Client, data: RelationshipAPIData) {
@@ -30,7 +34,9 @@ export default class Relationship extends Base {
     this.user1 = new User(client, data.user1);
     this.user2 = new User(client, data.user2);
     this.lastMessage = new Date(data.last_message);
-    this.active = data.active;
+    this.activeUser1 = data.active_user_1;
+    this.activeUser2 = data.active_user_2;
+    this.isFriends = data.is_friends;
     this.createdAt = new Date(data.created_at);
   }
 
@@ -40,5 +46,16 @@ export default class Relationship extends Base {
 
   get self() {
     return this.client.user.id !== this.user1.id ? this.user2 : this.user1;
+  }
+
+  public clientActive() {
+    return this.activeFor(this.client.user.id);
+  }
+
+  public activeFor(userId: number) {
+    return (
+      (this.user1.id === userId && this.activeUser1) ||
+      (this.user2.id === userId && this.activeUser2)
+    );
   }
 }

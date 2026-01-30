@@ -1,7 +1,7 @@
-import Client from "../client/Client";
-import Channel from "../structures/Channel";
-import BaseManager from "./BaseManager";
-import Message, { MessageAPIData } from "../structures/Message";
+import Client from "../client/Client.js";
+import Channel from "../structures/Channel.js";
+import BaseManager from "./BaseManager.js";
+import Message, { MessageAPIData } from "../structures/Message.js";
 
 export interface ChannelMessageQueryOptions {
   amount?: number;
@@ -27,7 +27,7 @@ export default class ChannelMessageManager extends BaseManager<
       `/api/channels/${this.channel.id}/messages`,
       {
         content,
-      }
+      },
     );
     return new Message(this.client, result.data);
   }

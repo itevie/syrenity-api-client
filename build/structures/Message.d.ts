@@ -1,9 +1,9 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import FileBase from "./FileBase";
-import Reaction, { ReactionApiData } from "./Reaction";
-import User, { UserAPIData } from "./User";
-import { WebhookAPIData } from "./Webhook";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import FileBase from "./FileBase.js";
+import Reaction, { ReactionApiData } from "./Reaction.js";
+import User, { UserAPIData } from "./User.js";
+import { WebhookAPIData } from "./Webhook.js";
 export interface MessageAPIData {
     id: number;
     content: string;
@@ -59,3 +59,4 @@ export default class Message extends Base {
         readonly systemType: string;
     };
 }
+//# sourceMappingURL=Message.d.ts.map

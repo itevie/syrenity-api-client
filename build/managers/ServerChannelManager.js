@@ -1,5 +1,5 @@
-import Channel from "../structures/Channel";
-import BaseManager from "./BaseManager";
+import Channel from "../structures/Channel.js";
+import BaseManager from "./BaseManager.js";
 export default class ServerChannelManager extends BaseManager {
     server;
     constructor(client, server) {

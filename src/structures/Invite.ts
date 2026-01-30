@@ -1,7 +1,7 @@
-import Client from "../client/Client";
-import Base from "./Base";
-import { ChannelAPIData } from "./Channel";
-import { ServerAPIData } from "./Server";
+import Client from "../client/Client.js";
+import Base from "./Base.js";
+import { ChannelAPIData } from "./Channel.js";
+import { ServerAPIData } from "./Server.js";
 
 export interface InviteAPIData {
   id: string;

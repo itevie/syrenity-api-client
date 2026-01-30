@@ -1,5 +1,5 @@
-import User from "../structures/User";
-import BaseManager from "./BaseManager";
+import User from "../structures/User.js";
+import BaseManager from "./BaseManager.js";
 export default class UserManager extends BaseManager {
     constructor(client) {
         super(client);
